@@ -3,6 +3,7 @@ Rails.application.routes.draw do
 
   resources :users, only: [:show] do
     resources :foods, only: [:show, :edit, :update, :destroy] 
+  end
 
   root "users#show"
 end
