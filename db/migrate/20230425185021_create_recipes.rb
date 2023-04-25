@@ -5,6 +5,7 @@ class CreateRecipes < ActiveRecord::Migration[7.0]
       t.integer :preparation_time
       t.integer :cooking_time
       t.text :description
+      t.boolean :public, default: false
       t.references :user, null: false, foreign_key: true, index: { unique: false, name: 'user_recipes_index'}
 
       t.timestamps
