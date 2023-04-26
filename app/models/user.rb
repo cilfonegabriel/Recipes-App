@@ -1,5 +1,4 @@
 class User < ApplicationRecord
-  has_many :foods
 
   # Include default devise modules. Others available are:
   # :lockable, :timeoutable, :trackable and :omniauthable
@@ -7,6 +6,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable, :confirmable
 
   has_many :recipes
+  has_many :foods
 
   validates :name, presence: true
   validates :email, presence: true
