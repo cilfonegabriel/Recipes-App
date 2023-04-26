@@ -1,0 +1,16 @@
+<div id="<%= dom_id food %>">
+  <tr>
+    <td><%= food.id %></td>
+    <td><%= food.name %></td>
+    <td><%= food.quantity %></td>
+    <td><%= food.price %></td>
+    <td><%= food.measurement_unit %></td>
+    <td><%= food.user.name %></td>
+    <td class="py-3 px-6 text-left">
+      <%= link_to "Edit", food_path(food), class: 'bg-blue-500 hover:bg-blue-7
+      00 text-white font-bold py-2 px-4 rounded mr-2' %>
+      <%= button_to "Remove", food_path(food), method: :delete, data: { confirm: 'Are you sure?' }, class: 'bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded' %>
+    </td>
+  </tr>
+</div>
+
