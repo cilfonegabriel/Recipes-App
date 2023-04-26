@@ -1,21 +1,27 @@
 class FoodsController < ApplicationController
   before_action :set_food, only: %i[show edit update destroy]
+
   # GET /foods or /foods.json
   def index
     @user = User.find(current_user.id)
     @foods = Food.includes(:user).where(user_id: current_user.id)
   end
+
   # GET /foods/1 or /foods/1.json
   def show
     @user = User.find(current_user.id)
   end
+
   # GET /foods/new
   def new
     @user = User.find(current_user.id)
     @food = Food.new
   end
+
   # GET /foods/1/edit
-  def edit; end
+  def edit
+  end
+
   # POST /foods or /foods.json
   def create
     @food = Food.new(food_params)
@@ -31,6 +37,7 @@ class FoodsController < ApplicationController
       end
     end
   end
+
   # PATCH/PUT /foods/1 or /foods/1.json
   def update
     respond_to do |format|
@@ -43,6 +50,7 @@ class FoodsController < ApplicationController
       end
     end
   end
+
   # DELETE /foods/1 or /foods/1.json
   def destroy
     @food.destroy
@@ -52,14 +60,19 @@ class FoodsController < ApplicationController
       format.json { head :no_content }
     end
   end
-  def shoping_list
-    @shoping_list = Food.shoping_list
+
+  # GET /sign_in
+  def sign_in
+    redirect_to new_user_session_path
   end
+
   private
+
   # Use callbacks to share common setup or constraints between actions.
   def set_food
     @food = Food.find(params[:id])
   end
+
   # Only allow a list of trusted parameters through.
   def food_params
     params.require(:food).permit(:name, :measurement_unit, :price, :quantity, :user_id)
