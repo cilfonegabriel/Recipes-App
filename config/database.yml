@@ -25,7 +25,7 @@ default: &default
   password: Paliorojorojo2
   #host: <%= ENV["WINDOWS_HOST"] %>
   #username: postgres
-  3password: <%= ENV["POSTGRES_PWD"] %>
+  #password: <%= ENV["POSTGRES_PWD"] %>
 
 development:
   <<: *default
