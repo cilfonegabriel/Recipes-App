@@ -1,1 +1,5 @@
-<h1>show</h1>
+<%= render partial: 'foodsingle', locals: {food: @food} %>
+
+<div class='flex justify-center mt-8'>
+  <%= link_to "Back to foods", foods_path, class: 'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' %>
+</div>
