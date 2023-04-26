@@ -1,1 +1,23 @@
-<h1>index</h1>
+<h1 class="text-4xl text-center font-bold mb-4">Food</h1>
+
+<%= link_to "Add food", new_food_path, class: 'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded m-4' %>
+
+<div class="bg-white shadow-md rounded my-6">
+  <table class="table-auto w-full">
+    <thead>
+      <tr class="bg-gray-200 text-gray-700 uppercase text-sm leading-normal">
+        <th class="py-3 px-6 text-left">#</th>
+        <th class="py-3 px-6 text-left">Price:</th>
+        <th class="py-3 px-6 text-left">Quantity:</th>
+        <th class="py-3 px-6 text-left">Price:</th>
+        <th class="py-3 px-6 text-left">Measurement unit:</th>
+        <th class="py-3 px-6 text-left">Owner:</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @foods.each do |food| %>
+        <%= render food %>
+      <% end %>
+    </tbody>
+  </table>
+</div>
