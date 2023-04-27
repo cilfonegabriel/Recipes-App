@@ -9,4 +9,8 @@ class User < ApplicationRecord
 
   validates :name, presence: true
   validates :email, presence: true
+
+  def current_user
+    User.find(params[:user_id])
+  end
 end
