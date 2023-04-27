@@ -10,4 +10,6 @@ class Recipe < ApplicationRecord
   def public?
     public
   end
+
+  
 end
