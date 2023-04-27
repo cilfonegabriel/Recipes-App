@@ -63,7 +63,6 @@ class FoodsController < ApplicationController
     @shoping_list = Food.shoping_list(current_user)
   end
 
-
   private
 
   # Use callbacks to share common setup or constraints between actions.

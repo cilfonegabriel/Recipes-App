@@ -22,8 +22,6 @@ class Food < ApplicationRecord
     shopping_list = shoping.sort.to_h
     shoping = shopping_list.map { |food, quantity| [food, quantity] }
 
-
-
     current_food.each do |food|
       if shoping[food.name]
         if shoping[food.name] > food.quantity
