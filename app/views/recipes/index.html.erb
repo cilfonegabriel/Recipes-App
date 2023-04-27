@@ -1,0 +1,14 @@
+<div class="w-screen flex flex-col gap-4 items-center justify-start mt-0 px-10">
+  <h1 class="text-4xl">Recipes</h1>
+  <% @recipes.each do |recipe| %>
+    <%= link_to recipe_path(recipe.id), class: "w-full" do %>
+      <div class="flex border-2 border-black justify-between items-center px-4 py-6 w-full">
+        <div class="w-2/5">
+          <h2 class="text-xl"><%= recipe.name %></h2>
+          <%= button_to 'Delete', { action: 'destroy', id: recipe.id }, method: :delete, class: 'text-blue-800' %>
+        </div>
+        <h3 class="text-xs w-3/5"><%= recipe.description %></h3>
+      </div>
+    <% end %>
+  <% end %>
+</div>
