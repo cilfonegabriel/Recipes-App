@@ -14,10 +14,11 @@ class FoodsController < ApplicationController
     @recipe_food = RecipeFood.find_by(food_id: @food.id)
     @user = User.find(current_user.id)
 
-    if @recipe_food.nil?
-      flash[:notice] = "This food item has not been used in any recipes yet"
-    end
+    return unless @recipe_food.nil?
+
+    flash[:notice] = 'This food item has not been used in any recipes yet'
   end
+
   # GET /foods/new
   def new
     @user = User.find(current_user.id)
