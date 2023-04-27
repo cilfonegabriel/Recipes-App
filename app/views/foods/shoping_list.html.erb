@@ -1,0 +1,32 @@
+<div class="container mx-auto">
+  <h1 class='text-center mt-5 mb-5 text-4xl font-bold'>Shopping List</h1>
+
+  <div class="flex justify-between mx-auto mb-5" style="width: 80%">
+    <h4 class="text-lg">Total items: <%= @shoping_list.length %></h4>
+    <% cost = 0
+      @shoping_list.each do |food| 
+      cost += (Food.find_by(name: food[0]).price) * food[1]
+    %>
+    <% end %>
+    <h4 class="text-lg">Total cost: $<%= cost %></h4>
+  </div>
+
+  <table class="table w-full mx-auto text-center" style="width: 80%">
+    <thead>
+      <tr>
+        <th class="bg-gray-200 uppercase text-sm leading-normal py-3 px-4">Product</th>
+        <th class="bg-gray-200 uppercase text-sm leading-normal py-3 px-4">Quantity</th>
+        <th class="bg-gray-200 uppercase text-sm leading-normal py-3 px-4">Price</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @shoping_list.each do |food| %>
+        <tr> 
+          <td class="py-3 px-4"><%= food[0] %></td>
+          <td class="py-3 px-4"><%= food[1] %></td>
+          <td class="py-3 px-4">$<%= (Food.find_by(name: food[0]).price) * food[1] %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

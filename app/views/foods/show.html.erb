@@ -1,5 +1,9 @@
-<%= render partial: 'foodsingle', locals: {food: @food} %>
+<div class="bg-white shadow-md rounded my-6 p-6">
+  <%= render @recipe_food %>
 
-<div class='flex justify-center mt-8'>
-  <%= link_to "Back to foods", foods_path, class: 'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' %>
+  <div class="mt-4">
+    <%= link_to "Edit this recipe food", edit_recipe_food_path(@recipe_food), class: 'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-4' %>
+    <%= link_to "Back to recipe foods", recipe_foods_path, class: 'bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded mr-4' %>
+    <%= button_to "Destroy this recipe food", @recipe_food, method: :delete, data: { confirm: 'Are you sure?' }, class: 'bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded' %>
+  </div>
 </div>
