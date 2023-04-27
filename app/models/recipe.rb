@@ -7,9 +7,4 @@ class Recipe < ApplicationRecord
   validates :description, presence: true
   validates :public, presence: true
 
-  def public?
-    public
-  end
-
-  
 end

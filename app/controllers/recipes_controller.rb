@@ -11,6 +11,12 @@ class RecipesController < ApplicationController
     @recipe = recipe_by_id
   end
 
+  def update
+    @recipe = Recipe.find(params[:id])
+    @recipe.update_attribute(:public, !@recipe.public)
+    redirect_to recipe_path(@recipe.id)
+  end
+
   def destroy
     @recipe = Recipe.find(params[:id])
     respond_to do |format|

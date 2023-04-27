@@ -1,0 +1,7 @@
+<div>
+  <h1><%= @recipe.name %></h1>
+  <h2>Preparation time: <%= @recipe.preparation_time %></h2>
+  <h2>Cooking time: <%= @recipe.cooking_time %></h2>
+  <h2><%= @recipe.description %></h2>
+  <%= button_to @recipe.public.to_s, { action: 'update', id: @recipe.id }, method: :put %>
+</div>
