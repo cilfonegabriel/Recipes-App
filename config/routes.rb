@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 
   resources :users, only: [:show] 
   resources :recipes, only: [:index, :new, :create, :show, :destroy]
-  resources :recipe_foods [:index, :new, :create, :show, :update, :destroy] 
+  resources :recipe_foods, only: [:index, :new, :create, :show, :update, :destroy] 
   
   get 'shoping-list', to: 'foods#shoping_list'
 
@@ -11,3 +11,5 @@ Rails.application.routes.draw do
 
   root "users#show"
 end
+
+
