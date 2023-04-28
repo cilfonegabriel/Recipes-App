@@ -6,18 +6,20 @@
       <h2>Cooking time: <%= @recipe.cooking_time %></h2>
       <h2><%= @recipe.description %></h2>
     </div>
-    <div class="w-1/6 flex justify-right">
-      <% if @recipe.public == true%>
-        <div class="w-full flex">
-          <h1 class="ml-auto">Public</h1>
-          <%= button_to "O", { action: 'update', id: @recipe.id }, method: :put, class: 'text-white border-white border-2 p-0 text-right rounded-full text-2xl bg-green-500 leading-none w-[50px]' %>
-        </div>
-      <% else %>
-        <div class="w-full flex">
-          <h1 class="ml-auto">Public</h1>
-          <%= button_to "O", { action: 'update', id: @recipe.id }, method: :put , class: 'text-white border-white border-2 p-0 w-1/4 text-left rounded-full text-2xl bg-red-500 leading-none w-[50px]'%>
-        </div>
-      <% end %>
-    </div>
+    <% if can? :update, @recipe %>
+      <div class="w-1/6 flex justify-right">
+        <% if @recipe.public == true%>
+          <div class="w-full flex">
+            <h1 class="ml-auto">Public</h1>
+            <%= button_to "O", { action: 'update', id: @recipe.id }, method: :put, class: 'text-white border-white border-2 p-0 text-right rounded-full text-2xl bg-green-500 leading-none w-[50px]' %>
+          </div>
+        <% else %>
+          <div class="w-full flex">
+            <h1 class="ml-auto">Public</h1>
+            <%= button_to "O", { action: 'update', id: @recipe.id }, method: :put , class: 'text-white border-white border-2 p-0 w-1/4 text-left rounded-full text-2xl bg-red-500 leading-none w-[50px]'%>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
   </div>
 </div>
