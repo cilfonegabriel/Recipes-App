@@ -26,9 +26,7 @@ class FoodsController < ApplicationController
   end
 
   # GET /foods/1/edit
-  def edit
-    
-  end
+  def edit; end
 
   # POST /foods or /foods.json
   def create
@@ -46,10 +44,10 @@ class FoodsController < ApplicationController
 
   def update
     if @food.update(food_params)
-      flash[:success] = "Food item successfully updated!"
+      flash[:success] = 'Food item successfully updated!'
       redirect_to foods_path
     else
-      flash.now[:error] = "Food item update failed!"
+      flash.now[:error] = 'Food item update failed!'
       render :edit
     end
   end
