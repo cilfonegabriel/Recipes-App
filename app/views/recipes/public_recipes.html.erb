@@ -1,0 +1,13 @@
+<div class="w-screen flex flex-col gap-4 items-center justify-start mt-0 px-10">
+  <% @recipes.each do |recipe| %>
+    <%= link_to recipe_path(recipe.id), class: "w-full" do %>
+      <div class="flex border-2 border-black justify-between items-center px-4 py-6 w-full">
+        <div class="w-2/5">
+          <h2 class="text-xl"><%= recipe.name %></h2>
+          <h2>By: <%= recipe.user.name %></h2>
+        </div>
+        <h3 class="text-xs w-3/5"><%= recipe.description %></h3>
+      </div>
+    <% end %>
+  <% end %>
+</div>
