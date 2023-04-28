@@ -1,0 +1,16 @@
+<div class="text-center">
+  <h1 class="text-4xl font-bold mb-4">Recipe foods</h1>
+
+  <%= link_to "New recipe food", new_recipe_food_path, class: 'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded m-4' %>
+
+  <div class="bg-white shadow-md rounded my-6">
+    <div id="recipe_foods">
+      <% @recipe_foods.each do |recipe_food| %>
+        <%= render recipe_food %>
+        <p>
+          <%= link_to "Show this recipe food", recipe_foods_path %>
+        </p>
+      <% end %>
+    </div>
+  </div>
+</div>

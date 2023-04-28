@@ -3,14 +3,18 @@ class FoodsController < ApplicationController
 
   # GET /foods or /foods.json
   def index
-    @foods = Food.all
+    @user = User.find(current_user.id)
+    @foods = Food.includes(:user).where(user_id: current_user.id)
   end
 
   # GET /foods/1 or /foods/1.json
-  def show; end
+  def show
+    @user = User.find(current_user.id)
+  end
 
   # GET /foods/new
   def new
+    @user = User.find(current_user.id)
     @food = Food.new
   end
 
@@ -20,25 +24,26 @@ class FoodsController < ApplicationController
   # POST /foods or /foods.json
   def create
     @food = Food.new(food_params)
+    @food.user = current_user
 
-    respond_to do |format|
-      if @food.save
-        format.html { redirect_to food_url(@food), notice: 'food was successfully created.' }
-        format.json { render :show, status: :created, location: @food }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @food.errors, status: :unprocessable_entity }
-      end
+    if @food.save
+      flash[:notice] = 'Food was successfully created.'
+      redirect_to foods_path(current_user)
+    else
+      flash[:alert] = 'Food could not be created.'
+      render :new
     end
   end
 
+  # PATCH/PUT /foods/1 or /foods/1.json
   def update
     respond_to do |format|
       if @food.update(food_params)
-        format.html { redirect_to food_url(@food), notice: 'food was successfully updated.' }
-        format.json { render :show, status: :created, location: @food }
+        format.html { redirect_to food_url(@food), notice: 'Food was successfully updated.' }
+        format.json { render :show, status: :ok, location: @food }
+        format.js
       else
-        format.html { render :new, status: :unprocessable_entity }
+        format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @food.errors, status: :unprocessable_entity }
       end
     end
@@ -49,9 +54,13 @@ class FoodsController < ApplicationController
     @food.destroy
 
     respond_to do |format|
-      format.html { redirect_to food_url(@food), notice: 'food was destroyed.' }
+      format.html { redirect_to foods_path(current_user), notice: 'Food was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def shoping_list
+    @shoping_list = Food.shoping_list(current_user)
   end
 
   private
