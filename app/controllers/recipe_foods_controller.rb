@@ -6,7 +6,9 @@ class RecipeFoodsController < ApplicationController
   end
 
   # GET /recipe_foods/1 or /recipe_foods/1.json
-  def show; end
+  def show
+    @recipe_food = RecipeFood.find(params[:id])
+  end
 
   # GET /recipe_foods/new
   def new

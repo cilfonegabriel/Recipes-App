@@ -1,0 +1,19 @@
+<nav class="bg-white shadow-md">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between h-16">
+      <div class="flex-shrink-0 flex items-center">
+        <a href="/" class="font-bold text-xl text-gray-800"></a>
+      </div>
+      <div class="hidden md:block">
+        <div class="ml-4 flex items-center md:ml-6">
+          <a href="/" class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">Public Recipes</a>
+          <% if user_signed_in? %>
+            <a href="<%= recipes_path(current_user) %>" class="ml-3 px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">My Recipes</a>
+            <a href="<%= foods_path(current_user) %>" class="ml-3 px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">My Food</a>
+            <a href="<%= shoping_list_path(current_user) %>" class="ml-3 px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">Shopping List</a>
+            <%= button_to 'Sign Out', destroy_user_session_path, method: :delete, class:"ml-3 px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50" %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>

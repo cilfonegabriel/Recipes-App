@@ -8,8 +8,15 @@ class FoodsController < ApplicationController
   end
 
   # GET /foods/1 or /foods/1.json
+
   def show
+    @food = Food.find(params[:id])
+    @recipe_food = RecipeFood.find_by(food_id: @food.id)
     @user = User.find(current_user.id)
+
+    return unless @recipe_food.nil?
+
+    flash[:notice] = 'This food item has not been used in any recipes yet'
   end
 
   # GET /foods/new
@@ -60,7 +67,7 @@ class FoodsController < ApplicationController
   end
 
   def shoping_list
-    @shoping_list = Food.shoping_list(current_user)
+    @shoping_list = Food.shoping_list
   end
 
   private
