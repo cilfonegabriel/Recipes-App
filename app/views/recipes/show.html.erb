@@ -1,11 +1,14 @@
 <div class="flex flex-col justify-center items-center gap-4">
   <h1 class="text-4xl"><%= @recipe.name %></h1>
+
   <div class="w-full flex gap-4 justify-between">
-    <div class="w-4/5 flex flex-col gap-2 text-md">
+
+    <div class="w-3/5 flex flex-col gap-2 text-md max-w-4xl">
       <h2>Preparation time: <%= @recipe.preparation_time %></h2>
       <h2>Cooking time: <%= @recipe.cooking_time %></h2>
       <h2><%= @recipe.description %></h2>
     </div>
+
     <% if can? :update, @recipe %>
       <div class="w-1/6 flex justify-right">
         <% if @recipe.public == true%>
@@ -21,5 +24,17 @@
         <% end %>
       </div>
     <% end %>
+    
   </div>
+
+  <% if can? :update, @recipe %>
+    <div class="flex justify-between w-full mt-3">
+      <%= link_to 'Generate Shopping List', new_recipe_ingredient_path(params[:id]), class: 'bg-blue-400 text-white px-4 py-2 rounded-lg'%>
+      <%= link_to 'Add Ingredient', new_recipe_ingredient_path(params[:id]), class: 'bg-blue-400 text-white px-4 py-2 rounded-lg'%>
+    </div>
+  <% end %>
+
+  <% @ingredients.each do |ing| %>
+    <h1><%= ing.food.name %></h1>
+  <% end %>
 </div>

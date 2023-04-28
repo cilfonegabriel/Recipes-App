@@ -1,5 +1,6 @@
 class Recipe < ApplicationRecord
   belongs_to :user
+  has_many :ingredients
 
   validates :name, presence: true, length: { maximum: 250 }
   validates :preparation_time, presence: true, numericality: { only_integer: true, greater_than: 0 }
