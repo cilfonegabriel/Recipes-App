@@ -1,8 +1,9 @@
-<section class="flex flex-col items-center py-10 w-screen px-10">
+<section class="flex flex-col items-center justify-center py-10 w-screen px-10">
   <h2>Sign up</h2>
+
   <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-    <% f.options[:html][:class] += 'flex flex-col items-center gap-4 px-0' %>
-    <%= render "devise/shared/error_messages", resource: resource %>
+    <% f.options[:html][:class] += ' flex flex-col items-center gap-4 px-0 mb-4' %>
+
 
     <div class="field">
       <%= f.label :name %><br />
@@ -26,6 +27,8 @@
       <%= f.label :password_confirmation %><br />
       <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
     </div>
+
+  <%= render "devise/shared/error_messages", resource: resource %>
 
     <div class="actions w-[95%] border-2 border-gray-600 self-auto text-center mt-4">
       <%= f.submit "Sign up" %>

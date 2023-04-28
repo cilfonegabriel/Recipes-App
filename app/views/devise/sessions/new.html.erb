@@ -1,8 +1,8 @@
-
-<section class="flex flex-col items-center py-10 w-screen px-10">
+<section class="flex flex-col items-center justify-center py-10 w-screen px-10">
   <h2>Log in</h2>
 
   <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+    <% f.options[:html][:class] += ' flex flex-col items-center gap-4 px-0 mb-4' %>
     <div class="field">
       <%= f.label :email %><br />
       <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
