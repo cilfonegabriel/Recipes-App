@@ -1,6 +1,6 @@
 class Food < ApplicationRecord
   belongs_to :user
-  has_many :recipe_foods, dependent: :destroy
+  has_many :ingredients, dependent: :destroy
 
   validates :name, presence: true, length: { maximum: 150 }
   validates :measurement_unit, presence: true, length: { maximum: 10 }
@@ -12,8 +12,8 @@ class Food < ApplicationRecord
     current_food = Food.where(user_id: 1)
     shoping = {}
 
-    recipe_food = RecipeFood.where(recipe_id: Recipe.where(public: true))
-    recipe_food.each do |food|
+    ingredient = Ingredient.where(recipe_id: Recipe.where(public: true))
+    ingredient.each do |food|
       shoping[food.food.name] = (shoping[food.food.name] || 0) + food.quantity
     end
 

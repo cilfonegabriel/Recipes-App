@@ -9,6 +9,7 @@ class RecipesController < ApplicationController
 
   def show
     @recipe = recipe_by_id
+    @ingredients = Ingredient.where(recipe_id: @recipe.id)
   end
 
   def update
@@ -32,6 +33,11 @@ class RecipesController < ApplicationController
 
   def public_recipes
     @recipes = Recipe.where('public = true')
+  end
+
+  def new_ingredient
+    @new_recipe = Recipe_food.new
+    @recipe = Recipe.find(params[:recipe_id])
   end
 
   private
