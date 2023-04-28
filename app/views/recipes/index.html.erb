@@ -1,5 +1,5 @@
 <div class="w-screen flex flex-col gap-4 items-center justify-start mt-0 px-1">
-  <h1 class="text-4xl">Recipes</h1>
+  <h1 class="text-4xl">My Recipes</h1>
   <% @recipes.each do |recipe| %>
     <%= link_to recipe_path(recipe.id), class: "w-5/6" do %>
       <div class="flex border-2 border-black justify-between items-center px-4 py-6 w-full">
