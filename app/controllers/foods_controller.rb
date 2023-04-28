@@ -11,10 +11,10 @@ class FoodsController < ApplicationController
 
   def show
     @food = Food.find(params[:id])
-    @recipe_food = RecipeFood.find_by(food_id: @food.id)
+    @ingredient = Ingredient.find_by(food_id: @food.id)
     @user = User.find(current_user.id)
 
-    return unless @recipe_food.nil?
+    return unless @ingredient.nil?
 
     flash[:notice] = 'This food item has not been used in any recipes yet'
   end
@@ -26,7 +26,9 @@ class FoodsController < ApplicationController
   end
 
   # GET /foods/1/edit
-  def edit; end
+  def edit
+    
+  end
 
   # POST /foods or /foods.json
   def create
@@ -42,17 +44,13 @@ class FoodsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /foods/1 or /foods/1.json
   def update
-    respond_to do |format|
-      if @food.update(food_params)
-        format.html { redirect_to food_url(@food), notice: 'Food was successfully updated.' }
-        format.json { render :show, status: :ok, location: @food }
-        format.js
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @food.errors, status: :unprocessable_entity }
-      end
+    if @food.update(food_params)
+      flash[:success] = "Food item successfully updated!"
+      redirect_to foods_path
+    else
+      flash.now[:error] = "Food item update failed!"
+      render :edit
     end
   end
 

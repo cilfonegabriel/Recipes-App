@@ -7,7 +7,7 @@
     <td class="text-center py-4"><%= food.measurement_unit %></td>
     <td class="text-center py-4"><%= food.user.name %></td>
     <td class="flex py-4 px-4">
-      <%= link_to "Edit", food_path(food), class: 'bg-blue-500 hover:bg-blue-7
+      <%= link_to "Edit", edit_food_path(food), class: 'bg-blue-500 hover:bg-blue-7
       00 text-white font-bold py-2 px-4 rounded mr-2 text-xs' %>
       <%= button_to "Remove", food_path(food), method: :delete, data: { confirm: 'Are you sure?' }, class: 'bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded text-xs' %>
     </td>
