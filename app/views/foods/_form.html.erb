@@ -26,7 +26,10 @@
       <%= form.number_field :quantity %>
     </div>
   
-    <div>
-      <%= form.submit %>
+    <div class="mt-4 flex justify-between">
+      <div class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2">
+        <%= form.submit %>
+      </div>
+      <%= link_to "Cancel", foods_path, class: 'bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded' %>
     </div>
   <% end %>
