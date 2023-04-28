@@ -1,6 +1,6 @@
 class RecipesController < ApplicationController
   def index
-    @recipes = Recipe.all
+    @recipes = current_user.recipes.order(created_at: :desc)
   end
 
   def new; end
@@ -28,6 +28,10 @@ class RecipesController < ApplicationController
         end
       end
     end
+  end
+
+  def public_recipes
+    @recipes = Recipe.where('public = true')
   end
 
   private

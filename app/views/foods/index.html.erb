@@ -1,26 +1,29 @@
-<div class="text-center">
-  <h1 class="text-4xl font-bold mb-4">Food</h1>
+<div class="w-screen flex flex-col gap-0 items-center justify-start mt-0 px-1">
+  <h1 class="text-4xl">My Food</h1>
 
-  <%= link_to "Add food", new_food_path, class: 'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded m-4' %>
+  <div class="flex flex-col mt-10">
+    <%= link_to "Add food", new_food_path, class: 'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-sm w-[13%] text-center ml-auto' %>
 
-  <div class="bg-white shadow-md rounded my-6">
-    <table class="table-auto w-full">
-      <thead>
-        <tr class="bg-gray-200 text-gray-700 uppercase text-sm leading-normal">
-          <th class="py-3 px-6 text-left">#</th>
-          <th class="py-3 px-6 text-left">Price:</th>
-          <th class="py-3 px-6 text-left">Quantity:</th>
-          <th class="py-3 px-6 text-left">Price:</th>
-          <th class="py-3 px-6 text-left">Measurement unit:</th>
-          <th class="py-3 px-6 text-left">Owner:</th>
-          <th class="py-3 px-6 text-left">Actions:</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @foods.each do |food| %>
-          <%= render food %>
-        <% end %>
-      </tbody>
-    </table>
+    <div class="bg-white shadow-md rounded my-6">
+      <table class="table-auto w-full">
+        <thead>
+          <tr class="bg-gray-200 text-gray-700 uppercase text-sm leading-normal">
+            <th class="py-3 px-6 text-left">#</th>
+            <th class="py-3 px-6 text-left">Price:</th>
+            <th class="py-3 px-6 text-left">Quantity:</th>
+            <th class="py-3 px-6 text-left">Price:</th>
+            <th class="py-3 px-6 text-left">Measurement unit:</th>
+            <th class="py-3 px-6 text-left">Owner:</th>
+            <th class="py-3 px-6 text-left">Actions:</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @foods.each do |food| %>
+            <%= render food %>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
   </div>
+
 </div>
