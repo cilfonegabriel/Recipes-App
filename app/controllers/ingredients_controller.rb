@@ -3,7 +3,7 @@ class IngredientsController < ApplicationController
     @recipe = Recipe.find(params[:recipe_id])
     @ingredient = Ingredient.new
     respond_to do |format|
-      format.html { render :new, locals: { ingredient: @ingredient }}
+      format.html { render :new, locals: { ingredient: @ingredient } }
     end
   end
 
