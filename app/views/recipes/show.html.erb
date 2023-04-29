@@ -1,40 +1,96 @@
-<div class="flex flex-col justify-center items-center gap-4">
-  <h1 class="text-4xl"><%= @recipe.name %></h1>
-
-  <div class="w-full flex gap-4 justify-between">
-
-    <div class="w-3/5 flex flex-col gap-2 text-md max-w-4xl">
-      <h2>Preparation time: <%= @recipe.preparation_time %></h2>
-      <h2>Cooking time: <%= @recipe.cooking_time %></h2>
-      <h2><%= @recipe.description %></h2>
+<section class="container border border-dark py-3">
+  <div class="row">
+    <h3 class="d-flex flex-column align-items-center mb-3"><%= @recipe.name %></h3>
+    <div class="col-9">
+      <p>
+        <strong>Preparation Time:</strong>
+        <%= @recipe.preparation_time.strftime("%Hhrs %Mmin") %>
+      </p>
+      <p>
+        <strong>Cooking Time:</strong>
+        <%= @recipe.cooking_time.strftime("%Hhrs %Mmin") %>
+      </p>
     </div>
-
-    <% if can? :update, @recipe %>
-      <div class="w-1/6 flex justify-right">
-        <% if @recipe.public == true%>
-          <div class="w-full flex">
-            <h1 class="ml-auto">Public</h1>
-            <%= button_to "O", { action: 'update', id: @recipe.id }, method: :put, class: 'text-white border-white border-2 p-0 text-right rounded-full text-2xl bg-green-500 leading-none w-[50px]' %>
-          </div>
-        <% else %>
-          <div class="w-full flex">
-            <h1 class="ml-auto">Public</h1>
-            <%= button_to "O", { action: 'update', id: @recipe.id }, method: :put , class: 'text-white border-white border-2 p-0 w-1/4 text-left rounded-full text-2xl bg-red-500 leading-none w-[50px]'%>
+    <div class="col-3">
+      <%= form_with url: recipe_path, method: :put, scope: :recipe do |form| %>
+        <% if can? :update, @recipe %>
+          <div class="form-check form-switch">
+            <%= form.label :public, class: "form-check-label" %>
+            <%= form.check_box :public,
+                           {
+                             class: "form-check-input",
+                             role: "switch",
+                             onchange: "this.form.submit()"
+                           } %>
           </div>
         <% end %>
-      </div>
-    <% end %>
-    
+      <% end %>
+    </div>
+    <p><%= @recipe.description %></p>
   </div>
-
+  <% if current_user.present? %>
+    <div class="d-flex justify-content-between">
+      <%= link_to "Go to shopping list",
+      shopping_list_path,
+      class: "btn btn-secondary mb-4" %>
+    <% end %>
+    <% if can? :update, @recipe %>
+      <button
+        type="button"
+        class="btn btn-secondary mb-4"
+        data-bs-toggle="modal"
+        data-bs-target="#ingredientsModal"
+      >
+        Add Ingredient
+      </button>
+    <% end %>
+  </div>
+  <hr class="hr"/>
+  <table class="table table-striped table-hover table-bordered table-sortable">
+    <thead>
+      <tr>
+        <th>Ingredient</th>
+        <th>Quantity</th>
+        <th>value</th>
+        <% if can? :update, @recipe %>
+          <th>Actions</th>
+        <% end %>
+      </tr>
+    </thead>
+    <tbody>
+      <% @ingredients_list.each do |ingredient| %>
+        <tr>
+          <td><%= ingredient.food.name %></td>
+          <td><%= ingredient.quantity %></td>
+          <td>$<%= ingredient.food.price * ingredient.quantity %></td>
+          <% if can? :update, @recipe %>
+            <td>
+              <%= button_to "Delete", ingredient, method: :delete, class: "btn btn-danger" %>
+            </td>
+          <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
   <% if can? :update, @recipe %>
-    <div class="flex justify-between w-full mt-3">
-      <%= link_to 'Generate Shopping List', new_recipe_ingredient_path(params[:id]), class: 'bg-blue-400 text-white px-4 py-2 rounded-lg'%>
-      <%= link_to 'Add Ingredient', new_recipe_ingredient_path(params[:id]), class: 'bg-blue-400 text-white px-4 py-2 rounded-lg'%>
+    <div class="modal" tabindex="-1" id="ingredientsModal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">New Ingredient for
+              <%= @recipe.name %></h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <%= render "shared/ingredient_form", recipe_food: RecipeFood.new %>
+          </div>
+        </div>
+      </div>
     </div>
   <% end %>
-
-  <% @ingredients.each do |ing| %>
-    <h1><%= ing.food.name %></h1>
-  <% end %>
-</div>
+</section>

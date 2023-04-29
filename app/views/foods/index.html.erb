@@ -1,27 +1,47 @@
-<div class="w-screen flex flex-col gap-0 items-center justify-start mt-0 px-1">
-  <h1 class="text-4xl">My Food</h1>
+<div id="foods" class="mx-5">
+  <div class="d-flex justify-content-between align-items-center">
+    <h1>My Inventory</h1>
+    <button type="button" class="btn btn-primary mb-4" data-bs-toggle="modal" data-bs-target="#foodsModal">
+      Add food
+    </button>
+  </div>
+  <table class="table table-striped table-hover table-bordered table-sortable">
+    <thead>
+      <tr>
+        <th>Food</th>
+        <th>Quantity owned</th>
+        <th>Unit price</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody class="align-baseline">
+      <% @foods.each do |food| %>
+        <tr>
+        <td><%= food.name %></td>
+        <td><%= "#{food.quantity} #{food.measurement_unit}" %></td>
+        <td>$<%= food.price %></td>
+        <td><%= button_to "Delete", food, method: :delete, class: 'btn btn-danger' %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
 
-  <div class="flex flex-col mt-10">
-    <%= link_to "Add food", new_food_path, class: 'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-sm w-1/6 text-center ml-auto' %>
-
-    <div class="bg-white shadow-md rounded my-6">
-      <table class="table-auto w-full">
-        <thead>
-          <tr class="bg-gray-200 text-gray-700 uppercase text-sm leading-normal">
-            <th class="py-3 px-6 text-left">Name</th>
-            <th class="py-3 px-6 text-left">Quantity</th>
-            <th class="py-3 px-6 text-left">Unit Price</th>
-            <th class="py-3 px-6 text-left">Measurement unit</th>
-            <th class="py-3 px-6 text-left">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @foods.each do |food| %>
-            <%= render food %>
-          <% end %>
-        </tbody>
-      </table>
+<div class="modal" tabindex="-2" id="foodsModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">New food</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <%= render "form", food: Food.new %>
+      </div>
     </div>
   </div>
-
 </div>

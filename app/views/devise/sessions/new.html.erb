@@ -1,8 +1,7 @@
-<section class="flex flex-col items-center justify-center py-10 w-screen px-10">
+<section class="mx-3">
   <h2>Log in</h2>
 
   <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-    <% f.options[:html][:class] += ' flex flex-col items-center gap-4 px-0 mb-4' %>
     <div class="field">
       <%= f.label :email %><br />
       <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
@@ -20,11 +19,9 @@
       </div>
     <% end %>
 
-    <div class="actions w-[95%] border-2 border-gray-600 self-auto text-center mt-4">
-      <%= f.submit "Log in" %>
+    <div class="actions">
+      <%= f.submit "Log in", class: ' btn btn-primary my-2' %>
     </div>
   <% end %>
-
   <%= render "devise/shared/links" %>
-
 </section>

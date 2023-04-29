@@ -1,0 +1,24 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Shopping List</h1>
+
+<div id="recipe_foods" class="d-flex justify-content-center">
+<table class="table table-striped table-hover table-bordered table-sortable" style="width: 60%;">
+    <thead>
+      <tr>
+        <th>Ingredient</th>
+        <th>Quantity needed</th>
+        <th>Total value</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @shopping_list.each do |ingredient| %>
+        <tr>
+          <td><%= ingredient[:name] %></td>
+          <td><%= "#{ingredient[:quantity]} #{ingredient[:measurement_unit]}" %></td>
+          <td>$<%= ingredient[:total_price] %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

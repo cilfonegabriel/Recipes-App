@@ -1,54 +1,23 @@
 class FoodsController < ApplicationController
   before_action :set_food, only: %i[show edit update destroy]
+  authorize_resource
 
   # GET /foods or /foods.json
   def index
-    @user = User.find(current_user.id)
-    @foods = Food.includes(:user).where(user_id: current_user.id)
+    @foods = current_user.foods
   end
-
-  # GET /foods/1 or /foods/1.json
-
-  def show
-    @food = Food.find(params[:id])
-    @ingredient = Ingredient.find_by(food_id: @food.id)
-    @user = User.find(current_user.id)
-
-    return unless @ingredient.nil?
-
-    flash[:notice] = 'This food item has not been used in any recipes yet'
-  end
-
-  # GET /foods/new
-  def new
-    @user = User.find(current_user.id)
-    @food = Food.new
-  end
-
-  # GET /foods/1/edit
-  def edit; end
 
   # POST /foods or /foods.json
   def create
     @food = Food.new(food_params)
     @food.user = current_user
 
-    if @food.save
-      flash[:notice] = 'Food was successfully created.'
-      redirect_to foods_path(current_user)
-    else
-      flash[:alert] = 'Food could not be created.'
-      render :new
-    end
-  end
-
-  def update
-    if @food.update(food_params)
-      flash[:success] = 'Food item successfully updated!'
-      redirect_to foods_path
-    else
-      flash.now[:error] = 'Food item update failed!'
-      render :edit
+    respond_to do |format|
+      if @food.save
+        format.html { redirect_to foods_url(@food), notice: 'Food was successfully created.' }
+      else
+        format.html { render :new, status: :unprocessable_entity }
+      end
     end
   end
 
@@ -57,13 +26,9 @@ class FoodsController < ApplicationController
     @food.destroy
 
     respond_to do |format|
-      format.html { redirect_to foods_path(current_user), notice: 'Food was successfully destroyed.' }
+      format.html { redirect_to foods_url, notice: 'Food was successfully deleted.' }
       format.json { head :no_content }
     end
-  end
-
-  def shoping_list
-    @shoping_list = Food.shoping_list
   end
 
   private
@@ -75,6 +40,6 @@ class FoodsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def food_params
-    params.require(:food).permit(:name, :measurement_unit, :price, :quantity, :user_id)
+    params.require(:food).permit(:name, :measurement_unit, :price, :quantity)
   end
 end
