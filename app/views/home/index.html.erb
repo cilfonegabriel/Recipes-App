@@ -1,0 +1,24 @@
+<section>
+<div class="row">
+  <div class="col">
+    <h1>Last registered users</h1>
+    <div class="d-flex flex-column align-items-center">
+      <% @recent_users.each do |user| %>
+      <h4>#<%= user.id %> | <%= user.name %></h4> 
+      <% end %>
+    </div>
+  </div>
+  <div class="col">
+    <h1>Last public recipes</h1>
+    <div class="d-flex flex-column align-items-center">
+      <% @recent_recipes.each do |recipe| %>
+        <div class="card mb-2 p-2 border-dark" style="width: 60%;">
+          <h4>Recipe name: </h4><p><%= recipe.name %></p> 
+          <p>Preparation time: <%= recipe.preparation_time.strftime('%Hhrs %Mmin') %></p>
+          <p>Cooking time: <%= recipe.cooking_time.strftime('%Hhrs %Mmin') %></p>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+</section>

@@ -1,52 +1,63 @@
 class RecipesController < ApplicationController
+  before_action :set_recipe, only: %i[show update destroy]
+  before_action :authenticate_user!, except: %i[public_recipes show]
+  authorize_resource except: :public_recipes
+
   def index
-    @recipes = current_user.recipes.order(created_at: :desc)
+    user = current_user
+    @recipes = user.recipes.order(created_at: :desc)
   end
 
-  def new; end
-
-  def create; end
+  def public_recipes
+    @public_recipes = Recipe.where(public: true).includes(:user)
+  end
 
   def show
-    @recipe = recipe_by_id
-    @ingredients = Ingredient.where(recipe_id: @recipe.id)
+    @ingredients_list = @recipe.recipe_foods.includes(:food)
   end
 
-  def update
-    @recipe = Recipe.find(params[:id])
-    @recipe.update_attribute(:public, !@recipe.public)
-    redirect_to recipe_path(@recipe.id)
+  def new
+    @recipe = Recipe.new
   end
 
-  def destroy
-    @recipe = Recipe.find(params[:id])
-    respond_to do |format|
-      format.html do
-        if @recipe.destroy
-          redirect_to recipes_path
-        else
-          flash.now[:error] = 'Error: could not delete recipe'
-        end
+  def create
+    @recipe = Recipe.new(recipe_params)
+    @recipe.user = current_user
+
+    respond_to do |f|
+      if @recipe.save
+        f.html { redirect_to recipe_url(@recipe), notice: 'Recipe was successfully created.' }
+      else
+        f.html { render :index, status: :unprocessable_entity }
       end
     end
   end
 
-  def public_recipes
-    @recipes = Recipe.where('public = true')
+  def update
+    respond_to do |format|
+      if @recipe.update(recipe_params)
+        format.html { redirect_to recipe_url(@recipe), notice: 'Recipe was successfully updated.' }
+      else
+        format.html { render :index, status: :unprocessable_entity }
+      end
+    end
   end
 
-  def new_ingredient
-    @new_recipe = Recipe_food.new
-    @recipe = Recipe.find(params[:recipe_id])
+  def destroy
+    @recipe.destroy
+
+    respond_to do |format|
+      format.html { redirect_to recipes_url, notice: 'Recipe was successfully destroyed.' }
+    end
   end
 
   private
 
-  def recipe_by_id
-    Recipe.find(params[:id])
+  def set_recipe
+    @recipe = Recipe.find(params[:id])
   end
 
-  def post_params
-    params.require(:recipe).permit(:name, :preparation_time, :cooking_time, :description)
+  def recipe_params
+    params.require(:recipe).permit(:name, :preparation_time, :cooking_time, :description, :public)
   end
 end

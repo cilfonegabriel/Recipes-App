@@ -1,31 +1,8 @@
 class Food < ApplicationRecord
   belongs_to :user
-  has_many :ingredients, dependent: :destroy
-
-  validates :name, presence: true, length: { maximum: 150 }
-  validates :measurement_unit, presence: true, length: { maximum: 10 }
-  validates :price, presence: true, numericality: true
-  validates :quantity, presence: true, numericality: true
-  validates :user_id, presence: true
-
-  def self.shoping_list
-    current_food = Food.where(user_id: 1)
-    shoping = {}
-
-    ingredient = Ingredient.where(recipe_id: Recipe.where(public: true))
-    ingredient.each do |food|
-      shoping[food.food.name] = (shoping[food.food.name] || 0) + food.quantity
-    end
-
-    current_food.each do |food|
-      if shoping.key?(food.name)
-        if shoping[food.name] > food.quantity
-          shoping[food.name] -= food.quantity
-        else
-          shoping.delete(food.name)
-        end
-      end
-    end
-    shoping
-  end
+  has_many :recipe_foods, dependent: :destroy
+  validates :name, presence: true, length: { in: 2..250 }
+  validates :measurement_unit, presence: true
+  validates :price, presence: true, numericality: { only_float: true, greater_than_or_equal_to: 0 }
+  validates :quantity, presence: true
 end

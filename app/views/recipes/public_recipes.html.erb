@@ -1,14 +1,61 @@
-<div class="w-screen flex flex-col gap-4 items-center justify-start mt-0 px-1">
-  <h1 class="text-4xl">Public Recipes</h1>
-  <% @recipes.each do |recipe| %>
-    <%= link_to recipe_path(recipe.id), class: "w-5/6" do %>
-      <div class="flex border-2 border-black justify-between items-center px-4 py-6 w-full">
-        <div class="w-2/5">
-          <h2 class="text-xl"><%= recipe.name %></h2>
-          <h2>By: <%= recipe.user.name %></h2>
+<div class="public-recipes d-flex flex-column align-items-center mx-5 my-2">
+  <h1 class="align-self-start">Public Recipes</h1>
+  <% if can? :create, Recipe %>
+    <button
+      type="button"
+      class="btn btn-primary mb-4"
+      data-bs-toggle="modal"
+      data-bs-target="#recipesModal"
+    >
+      New Recipe
+    </button>
+  <% end %>
+  <% @public_recipes.each do |recipe| %>
+    <%= link_to recipe, class: 'card mb-4 p-2 border-dark overflow-hidden', style: 'height: 7rem; width: 50%; text-decoration: none; color: black;' do %>
+      <div class="row px-3" id="<%= dom_id recipe %>">
+        <div
+          class="
+            col-5
+            ml-2
+            d-flex
+            flex-column
+            align-items-center
+            justify-content-around
+          "
+          style="height: 7rem;"
+        >
+          <h4><%= recipe.name %></h4>
+          <p class="d-flex flex-column align-items-start">By:
+            <%= recipe.user.name %></p>
         </div>
-        <h3 class="text-xs w-3/5"><%= recipe.description %></h3>
+        <div class="col-7 d-flex flex-column align-items-center justify-content-around">
+          <p>Total food items:
+            <%= recipe.recipe_foods.count %></p>
+          <p>Total price: $<%= recipe_total_value(recipe) %></p>
+        </div>
       </div>
+
     <% end %>
   <% end %>
 </div>
+
+<% if can? :create, Recipe %>
+  <div class="modal" tabindex="-1" id="recipesModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">New recipe</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <%= render "form", recipe: Recipe.new %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

@@ -1,0 +1,32 @@
+<%= form_with(model: recipe_food) do |form| %>
+    <% if recipe_food.errors.any? %>
+      <div style="color: red">
+        <h2><%= pluralize(recipe_food.errors.count, "error") %> prohibited this recipe_food from being saved:</h2>
+  
+        <ul>
+          <% recipe_food.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+    <%= form.hidden_field :recipe_id, value: @recipe.id %>
+    <%= form.label :quantity, style: "display: block" %>
+    <%= form.text_field :quantity %> <br>
+    <%= form.label :food, class: 'form-label' %>
+    <%= form.text_field :food, class: 'form-control', list: "datalistOptions", placeholder: "Type to search owned ingredients..." %>
+    <datalist id="datalistOptions">
+    <% if current_user.present? %>
+      <% current_user.foods.each do |food| %>
+        <option value="<%= food.name %>">
+    <% end %>
+      <% end %>
+    </datalist>
+    <%= form.label :measurement_unit, class: 'form-label' %>
+    <%= form.text_field :measurement_unit %> <br>
+    <%= form.label :price, class: 'form-label' %>
+    <%= form.text_field :price %> <br>
+    <div>
+      <%= form.submit class: 'btn btn-primary mt-3' %>
+    </div>
+  <% end %>

@@ -3,14 +3,27 @@ class User < ApplicationRecord
   # :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :confirmable
+  has_many :recipes, dependent: :destroy
+  has_many :foods, dependent: :destroy
 
-  has_many :recipes
-  has_many :foods
+  def self.create_shopping_list(user_id)
+    recipes_ingredients = Recipe.sum_ingredients(user_id)
+    user_ingredients = User.find(user_id).foods
+    missing_ingredients = []
+    user_ingredients.each do |food|
+      next if recipes_ingredients[food.name].nil?
 
-  validates :name, presence: true
-  validates :email, presence: true
+      quantity = recipes_ingredients[food.name] - food.quantity
+      next unless quantity.positive?
 
-  def current_user
-    User.find(params[:user_id])
+      missing = {
+        name: food.name,
+        quantity:,
+        total_price: quantity * food.price,
+        measurement_unit: food.measurement_unit
+      }
+      missing_ingredients << missing
+    end
+    missing_ingredients
   end
 end
