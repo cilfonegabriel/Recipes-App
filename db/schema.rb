@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_28_140246) do
+ActiveRecord::Schema[7.0].define(version: 2023_02_21_170445) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -18,33 +18,33 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_28_140246) do
     t.string "name"
     t.string "measurement_unit"
     t.decimal "price"
-    t.integer "quantity"
-    t.bigint "user_id", null: false
+    t.decimal "quantity"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "user_id"
     t.index ["user_id"], name: "index_foods_on_user_id"
   end
 
-  create_table "ingredients", force: :cascade do |t|
-    t.integer "quantity"
-    t.bigint "recipe_id"
-    t.bigint "food_id"
+  create_table "recipe_foods", force: :cascade do |t|
+    t.decimal "quantity"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["food_id"], name: "index_ingredients_on_food_id"
-    t.index ["recipe_id"], name: "index_ingredients_on_recipe_id"
+    t.bigint "food_id"
+    t.bigint "recipe_id"
+    t.index ["food_id"], name: "index_recipe_foods_on_food_id"
+    t.index ["recipe_id"], name: "index_recipe_foods_on_recipe_id"
   end
 
   create_table "recipes", force: :cascade do |t|
     t.string "name"
-    t.integer "preparation_time"
-    t.integer "cooking_time"
+    t.time "preparation_time"
+    t.time "cooking_time"
     t.text "description"
-    t.boolean "public", default: false
-    t.bigint "user_id", null: false
+    t.boolean "public"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "user_recipes_index"
+    t.bigint "user_id"
+    t.index ["user_id"], name: "index_recipes_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -66,7 +66,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_28_140246) do
   end
 
   add_foreign_key "foods", "users"
-  add_foreign_key "ingredients", "foods"
-  add_foreign_key "ingredients", "recipes"
+  add_foreign_key "recipe_foods", "foods"
+  add_foreign_key "recipe_foods", "recipes"
   add_foreign_key "recipes", "users"
 end

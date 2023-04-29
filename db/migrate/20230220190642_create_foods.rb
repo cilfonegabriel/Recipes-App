@@ -4,10 +4,10 @@ class CreateFoods < ActiveRecord::Migration[7.0]
       t.string :name
       t.string :measurement_unit
       t.decimal :price
-      t.integer :quantity
-      t.references :user, null: false, foreign_key: true
+      t.decimal :quantity
 
       t.timestamps
     end
+    add_reference :foods, :user, foreign_key: true
   end
 end
